@@ -6,9 +6,10 @@ export const Body = styled.div`
 	padding-bottom: 160px;
 	padding-left: 30px;
 	/*background-color: var(--primary-color);*/
+	/*background-color: #e3eff7;*/
 	width: 100vw;
-	/*height: 80vh;*/
-	/*padding-bottom: 100px;*/
+	height: 100vh;
+	padding-top: 100px;
 	box-sizing: border-box;
 `;
 
