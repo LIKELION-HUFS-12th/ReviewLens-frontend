@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Body = styled.div`
-  margin-top: 50px;
+  margin-top: 150px;
   padding-bottom: 160px;
   width: 100vw;
   box-sizing: border-box;
