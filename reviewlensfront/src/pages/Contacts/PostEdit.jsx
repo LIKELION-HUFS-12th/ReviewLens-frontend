@@ -41,7 +41,7 @@ export default function PostEdit() {
       });
 
       alert('수정이 완료되었습니다.');
-      navigate(`/postdetail/${postid}`); // 수정 후 상세 페이지로 이동.
+      navigate(`/contact`); // 수정 후 전체 보기로 이동.
     } catch (error) {
       console.error('Error saving post:', error);
       alert('수정 중 오류가 발생했습니다.');

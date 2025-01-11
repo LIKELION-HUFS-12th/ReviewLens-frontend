@@ -31,7 +31,7 @@ export default function PostWrite() {
         alert('문의글이 작성되었습니다.');
         setTitle('');
         setBody('');
-        navigate(`/postdetail/${response.data.id}`);
+        navigate(`/contact`);
       }
     } catch (error) {
       console.error('문의글 작성 중 오류 발생:', error);
