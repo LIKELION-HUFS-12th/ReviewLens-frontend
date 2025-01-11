@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import Rimg from '../assets/R.png';
 
 const StyledNavLink = styled(NavLink)`
   font-size: 18px;
@@ -9,6 +10,10 @@ const StyledNavLink = styled(NavLink)`
   margin: 30px;
   margin-top: 32px;
   color: black;
+  display: flex; /* Flexbox 활성화 */
+  flex-direction: row; /* 세로 방향 정렬 */
+  align-items: center; /* 가로 축 가운데 정렬 */
+  justify-content: center; /* 세로 축 가운데 정렬 */
 
   &.active {
     /*font-weight: bold;*/
@@ -46,6 +51,7 @@ const NavHeader = styled.div`
   width: 100%;
   height: 70px;
   padding: 10px;
+  /*background-color: var(--primary-color);*/
   background-color: #f8f8f8;
   position: fixed;
   top: 40px;
@@ -65,8 +71,9 @@ const Blank = styled.div`
   height: 40px;
   width: 100vw;
   font-size: 14px;
-  background-color: var(--primary-color);
-  /*background-color: #81baf9;*/
+  /*background-color: white;*/
+  /*background-color: var(--primary-color);*/
+  background-color: #81baf9;
   align-items: center;
   justify-content: center;
   top: 0px;
@@ -82,7 +89,17 @@ export default function Navbar() {
           리뷰의 감정을 읽고, 인사이트를 발견하는 스마트 분석 솔루션, ReviewLens
         </Blank>
         <NavHeader>
-          <StyledNavLink to="/" end className="main">
+          <StyledNavLink
+            to="/"
+            end
+            className="main"
+            style={{ justifyContent: 'center' }}
+          >
+            <img
+              src={Rimg}
+              alt="R"
+              style={{ height: '70px', alignItems: 'center' }}
+            />
             REVIEW LENS
           </StyledNavLink>
 

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useState } from 'react';
-import api from '../../api_token/api_token';
+import api from '../../api/api_token';
 import * as W from '../../styles/ContactStyles/PostWriteStyled';
 import { useNavigate } from 'react-router-dom';
 

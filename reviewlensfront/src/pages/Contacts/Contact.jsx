@@ -1,8 +1,7 @@
 // 문의글 전체 목록 페이지
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import api from '../../api_token/api_token.jsx';
+import api from '../../api/api_token.jsx';
 import { useNavigate } from 'react-router-dom';
 import * as C from '../../styles/ContactStyles/ContactStyled.jsx';
 

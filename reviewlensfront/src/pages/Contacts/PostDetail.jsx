@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../../api_token/api_token.jsx';
+import api from '../../api/api_token.jsx';
 import * as D from '../../styles/ContactStyles/PostDetailStyled.jsx';
 
 export default function PostDetail() {
