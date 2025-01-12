@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import Rimg from '../assets/R.png';
+import { useEffect, useState } from 'react';
 
 const StyledNavLink = styled(NavLink)`
   font-size: 18px;
@@ -20,7 +21,6 @@ const StyledNavLink = styled(NavLink)`
   }
 
   &:hover {
-    /*color: white;*/
     color: var(--primary-color);
   }
 
@@ -35,7 +35,8 @@ const StyledNavLink = styled(NavLink)`
     font-size: 35px;
   }
 
-  &.login {
+  &.login,
+  &.logout {
     border: 1px solid black;
     border-radius: 30px;
     padding: 0 20px;
@@ -44,6 +45,7 @@ const StyledNavLink = styled(NavLink)`
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3); /* 위쪽 방향 그림자 */
   }
 `;
+
 const NavHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -51,7 +53,6 @@ const NavHeader = styled.div`
   width: 100%;
   height: 70px;
   padding: 10px;
-  /*background-color: var(--primary-color);*/
   background-color: #f8f8f8;
   position: fixed;
   top: 40px;
@@ -66,13 +67,12 @@ const Navpart2 = styled.div`
   padding: 10px;
   gap: 1px;
 `;
+
 const Blank = styled.div`
   display: flex;
   height: 40px;
   width: 100vw;
   font-size: 14px;
-  /*background-color: white;*/
-  /*background-color: var(--primary-color);*/
   background-color: #81baf9;
   align-items: center;
   justify-content: center;
@@ -82,6 +82,24 @@ const Blank = styled.div`
 `;
 
 export default function Navbar() {
+  // 로그인 상태 관리
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // 컴포넌트 로드 시 로그인 상태 확인
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    setIsLoggedIn(!!token); // 토큰이 있으면 true, 없으면 false
+  }, []);
+
+  // 로그아웃 핸들러
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
+    setIsLoggedIn(false); // 로그인 상태 업데이트
+    alert('로그아웃되었습니다.');
+  };
+
   return (
     <>
       <nav>
@@ -100,7 +118,7 @@ export default function Navbar() {
               alt="R"
               style={{ height: '70px', alignItems: 'center' }}
             />
-            REVIEW LENS
+            EVIEW LENS
           </StyledNavLink>
 
           <Navpart2>
@@ -108,9 +126,15 @@ export default function Navbar() {
               문의하기
             </StyledNavLink>
 
-            <StyledNavLink to="/login" className="login">
-              로그인
-            </StyledNavLink>
+            {isLoggedIn ? (
+              <StyledNavLink to="/" className="logout" onClick={handleLogout}>
+                로그아웃
+              </StyledNavLink>
+            ) : (
+              <StyledNavLink to="/login" className="login">
+                로그인
+              </StyledNavLink>
+            )}
           </Navpart2>
         </NavHeader>
       </nav>
