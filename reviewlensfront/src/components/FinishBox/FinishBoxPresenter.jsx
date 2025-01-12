@@ -1,61 +1,117 @@
-//src/components/FinishBox/FinishBoxPresenter.jsx
+// FinishBoxPresenter.jsx
 import PropTypes from 'prop-types';
+import { Loader, X } from 'lucide-react';
+import { useEffect } from 'react';
 import {
-	FinishContainer,
-	ResultContainer,
-	ErrorMessage,
-	LoadingMessage,
-	ResultTable,
-	DownloadButton,
-} from '../../styles/FinishBox';
+	CardHeader,
+	CloseButton,
+	ErrorAlert,
+	InfoSection,
+	LoaderContainer,
+	ModalContent,
+	ModalOverlay,
+	ScrollableContainer,
+	StyledButton,
+	Table,
+	Badge,
+} from '../../styles/Modal.js';
 
+// 수정: FinishBoxPresenter 컴포넌트에 모달 관련 로직 추가
 const FinishBoxPresenter = ({
 	downloadFiles,
 	analysisResult,
 	isLoading,
 	error,
 	onDownload,
+	onClose,
 }) => {
+	// 모달이 열릴 때 스크롤 방지
+	useEffect(() => {
+		document.body.style.overflow = 'hidden';
+		return () => {
+			document.body.style.overflow = 'unset';
+		};
+	}, []);
+
 	return (
-		<FinishContainer>
-			<h2>분석이 완료되었습니다!</h2>
+		<ModalOverlay onClick={onClose}>
+			<ModalContent onClick={(e) => e.stopPropagation()}>
+				<CloseButton onClick={onClose}>
+					<X size={20} />
+				</CloseButton>
 
-			<ResultContainer>
-				<h3>분석 파일 정보</h3>
-				<p>파일명: {downloadFiles?.file_path?.split('/').pop()}</p>
-				<p>상태: {downloadFiles?.message}</p>
+				<CardHeader>
+					<h2>분석이 완료되었습니다!</h2>
+				</CardHeader>
 
-				{error && <ErrorMessage>{error}</ErrorMessage>}
+				<InfoSection>
+					<h3>분석 파일 정보</h3>
+					<p>파일명: {downloadFiles?.file_path?.split('/').pop()}</p>
+					<p>
+						상태: <Badge variant='outline'>{downloadFiles?.message}</Badge>
+					</p>
+				</InfoSection>
+
+				{error && <ErrorAlert>{error}</ErrorAlert>}
 
 				{isLoading ? (
-					<LoadingMessage>분석 결과 로딩 중...</LoadingMessage>
+					<LoaderContainer>
+						<Loader size={24} className='animate-spin' />
+						<span style={{ marginLeft: '12px' }}>분석 결과 로딩 중...</span>
+					</LoaderContainer>
 				) : (
 					analysisResult && (
-						<div>
-							<h4>감성 분석 결과</h4>
+						<div style={{ padding: '16px' }}>
+							<h4
+								style={{
+									fontSize: '18px',
+									fontWeight: '600',
+									marginBottom: '12px',
+								}}
+							>
+								감성 분석 결과
+							</h4>
 							{analysisResult.length > 0 ? (
 								<>
-									<p>총 분석된 항목: {analysisResult.length}개</p>
-									<ResultTable>
-										<thead>
-											<tr>
-												<th>상품명</th>
-												<th>리뷰 내용</th>
-												<th>감성 분석</th>
-											</tr>
-										</thead>
-										<tbody>
-											{analysisResult.slice(0, 5).map((item, index) => (
-												<tr key={index}>
-													<td>{item.product_name}</td>
-													<td>{item.original_content?.substring(0, 50)}...</td>
-													<td>{item.document_sentiment}</td>
+									<p style={{ marginBottom: '16px' }}>
+										총 분석된 항목:{' '}
+										<Badge variant='outline'>{analysisResult.length}개</Badge>
+									</p>
+									<ScrollableContainer>
+										<Table>
+											<thead>
+												<tr>
+													<th>상품명</th>
+													<th>리뷰 내용</th>
+													<th>감성 분석</th>
 												</tr>
-											))}
-										</tbody>
-									</ResultTable>
+											</thead>
+											<tbody>
+												{analysisResult.slice(0, 5).map((item, index) => (
+													<tr key={index}>
+														<td>{item.product_name}</td>
+														<td>
+															{item.original_content?.substring(0, 50)}...
+														</td>
+														<td>
+															<Badge variant={item.document_sentiment}>
+																{item.document_sentiment}
+															</Badge>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</Table>
+									</ScrollableContainer>
 									{analysisResult.length > 5 && (
-										<p style={{ textAlign: 'center', marginTop: '10px' }}>
+										<p
+											style={{
+												textAlign: 'center',
+												color: '#666',
+												fontSize: '14px',
+												marginTop: '8px',
+											}}
+										>
 											* 처음 5개 항목만 표시됨
 										</p>
 									)}
@@ -66,13 +122,13 @@ const FinishBoxPresenter = ({
 						</div>
 					)
 				)}
-			</ResultContainer>
 
-			{/*{downloadFiles?.pdf_report_path && (*/}
-			<DownloadButton onClick={onDownload}>PDF 리포트 다운로드</DownloadButton>
-		</FinishContainer>
+				<StyledButton onClick={onDownload}>PDF 리포트 다운로드</StyledButton>
+			</ModalContent>
+		</ModalOverlay>
 	);
 };
+
 FinishBoxPresenter.propTypes = {
 	downloadFiles: PropTypes.shape({
 		file_path: PropTypes.string,
@@ -89,6 +145,7 @@ FinishBoxPresenter.propTypes = {
 	isLoading: PropTypes.bool,
 	error: PropTypes.string,
 	onDownload: PropTypes.func.isRequired,
+	onClose: PropTypes.func.isRequired,
 };
 
 export default FinishBoxPresenter;
