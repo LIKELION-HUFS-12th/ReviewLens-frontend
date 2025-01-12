@@ -1,4 +1,4 @@
-//src/components/FinishBox/index.jsx
+import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types';
 import { useAnalysisResult } from '../../hooks/useAnalysisResult';
 import { handleFileDownload } from '../../utils/analysisUtils';
@@ -6,15 +6,23 @@ import FinishBoxPresenter from './FinishBoxPresenter';
 
 const FinishBox = ({ downloadFiles }) => {
 	const { analysisResult, isLoading, error } = useAnalysisResult(downloadFiles);
+	const [isModalOpen, setIsModalOpen] = useState(true);
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+	};
 
 	return (
-		<FinishBoxPresenter
-			downloadFiles={downloadFiles}
-			analysisResult={analysisResult}
-			isLoading={isLoading}
-			error={error}
-			onDownload={handleFileDownload}
-		/>
+		isModalOpen && (
+			<FinishBoxPresenter
+				downloadFiles={downloadFiles}
+				analysisResult={analysisResult}
+				isLoading={isLoading}
+				error={error}
+				onDownload={handleFileDownload}
+				onClose={closeModal}
+			/>
+		)
 	);
 };
 
