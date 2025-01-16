@@ -5,8 +5,10 @@ import PropTypes from 'prop-types';
 import * as XLSX from 'xlsx';
 import { uploadFile } from '../../api/uploadApi';
 import UploadBoxPresenter from './UploadBoxPresenter';
+import { useAuth } from '../../context/AuthContext';
 
 const UploadBox = ({ onUploadComplete }) => {
+	const { accessToken } = useAuth();
 	const [isActive, setActive] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -32,16 +34,16 @@ const UploadBox = ({ onUploadComplete }) => {
 			const formData = new FormData();
 			formData.append('file', file);
 
-			const result = await uploadFile(formData);
+			const result = await uploadFile(formData, accessToken); // accessToken 전달
 			onUploadComplete(result);
 		} catch (error) {
 			console.error('업로드 에러:', error);
-			alert(error.message);
+			const errorMessage = error.response?.data?.error || error.message;
+			alert(`업로드 실패: ${errorMessage}`);
 		} finally {
 			setIsLoading(false);
 		}
 	};
-
 	const handleFile = (file) => {
 		if (!file) return;
 
