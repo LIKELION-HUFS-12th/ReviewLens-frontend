@@ -1,6 +1,5 @@
-// FinishBoxPresenter.jsx
 import PropTypes from 'prop-types';
-import { Loader, X } from 'lucide-react';
+import { Loader, X, Check, RotateCcw } from 'lucide-react';
 import { useEffect } from 'react';
 import {
 	CardHeader,
@@ -16,7 +15,6 @@ import {
 	Badge,
 } from '../../styles/Modal.js';
 
-// 수정: FinishBoxPresenter 컴포넌트에 모달 관련 로직 추가
 const FinishBoxPresenter = ({
 	downloadFiles,
 	analysisResult,
@@ -24,14 +22,45 @@ const FinishBoxPresenter = ({
 	error,
 	onDownload,
 	onClose,
+	accessToken,
+	isDownloading,
+	downloadSuccess,
+	onReset,
 }) => {
-	// 모달이 열릴 때 스크롤 방지
 	useEffect(() => {
 		document.body.style.overflow = 'hidden';
 		return () => {
 			document.body.style.overflow = 'unset';
 		};
 	}, []);
+
+	// 다운로드 완료 후 표시될 화면
+	if (downloadSuccess) {
+		return (
+			<ModalOverlay onClick={onClose}>
+				<ModalContent onClick={(e) => e.stopPropagation()}>
+					<CloseButton onClick={onClose}>
+						<X size={20} />
+					</CloseButton>
+					<CardHeader>
+						<div className='flex items-center justify-center gap-2'>
+							<Check size={24} className='text-green-500' />
+							<h2>다운로드가 완료되었습니다!</h2>
+						</div>
+					</CardHeader>
+					<div className='p-6 flex flex-col items-center gap-4'>
+						<p> &nbsp; &nbsp; 다운로드한 PDF 파일을 확인해 주세요.</p>
+						<div className='flex gap-4'>
+							<StyledButton onClick={onReset}>
+								<RotateCcw size={16} className='mr-2' />
+								새로운 분석하기
+							</StyledButton>
+						</div>
+					</div>
+				</ModalContent>
+			</ModalOverlay>
+		);
+	}
 
 	return (
 		<ModalOverlay onClick={onClose}>
@@ -104,14 +133,7 @@ const FinishBoxPresenter = ({
 										</Table>
 									</ScrollableContainer>
 									{analysisResult.length > 5 && (
-										<p
-											style={{
-												textAlign: 'center',
-												color: '#666',
-												fontSize: '14px',
-												marginTop: '8px',
-											}}
-										>
+										<p className='text-center text-gray-500 text-sm mt-2'>
 											* 처음 5개 항목만 표시됨
 										</p>
 									)}
@@ -122,8 +144,19 @@ const FinishBoxPresenter = ({
 						</div>
 					)
 				)}
-
-				<StyledButton onClick={onDownload}>PDF 리포트 다운로드</StyledButton>
+				<StyledButton
+					onClick={() => onDownload(accessToken)}
+					disabled={isDownloading}
+				>
+					{isDownloading ? (
+						<>
+							<Loader size={16} className='animate-spin mr-2' />
+							다운로드 중...
+						</>
+					) : (
+						'PDF 리포트 다운로드'
+					)}
+				</StyledButton>
 			</ModalContent>
 		</ModalOverlay>
 	);
@@ -146,6 +179,10 @@ FinishBoxPresenter.propTypes = {
 	error: PropTypes.string,
 	onDownload: PropTypes.func.isRequired,
 	onClose: PropTypes.func.isRequired,
+	accessToken: PropTypes.string.isRequired,
+	isDownloading: PropTypes.bool,
+	downloadSuccess: PropTypes.bool,
+	onReset: PropTypes.func.isRequired,
 };
 
 export default FinishBoxPresenter;
