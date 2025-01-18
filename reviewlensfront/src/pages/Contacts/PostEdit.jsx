@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/api_token.jsx';
-import axios from 'axios';
-import * as D from '../../styles/ContactStyles/PostDetailStyled.jsx';
 import * as E from '../../styles/ContactStyles/PostEditStyled.jsx';
 
 export default function PostEdit() {
@@ -49,8 +47,8 @@ export default function PostEdit() {
   };
 
   return (
-    <D.Body>
-      <D.Form>
+    <E.Body>
+      <E.Form>
         <E.TitleEdit
           type="text"
           name="title"
@@ -65,11 +63,11 @@ export default function PostEdit() {
           onChange={handleInputChange}
           placeholder="내용을 입력하세요"
         />
-      </D.Form>
-      <D.ButtonContainer>
-        <D.Button onClick={handleSave}>저장하기</D.Button>
-        <D.Button onClick={() => navigate(-1)}>취소</D.Button>
-      </D.ButtonContainer>
-    </D.Body>
+      </E.Form>
+      <E.BtnContainer>
+        <E.Btn onClick={handleSave}>저장하기</E.Btn>
+        <E.Btn onClick={() => navigate(-1)}>취소</E.Btn>
+      </E.BtnContainer>
+    </E.Body>
   );
 }

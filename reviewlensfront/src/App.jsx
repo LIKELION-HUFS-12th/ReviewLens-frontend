@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import PostWrite from './pages/Contacts/PostWrite';
 import PostDetail from './pages/Contacts/PostDetail';
 import PostEdit from './pages/Contacts/PostEdit';
+import Comment from './pages/Contacts/Comment';
 //
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/posting" element={<PostWrite />} />
         <Route path="/postdetail/:postid" element={<PostDetail />} />
         <Route path="/edit/:postid" element={<PostEdit />} />
+        <Route path="/comment/:postid" element={<Comment />} />
         {/* 문의글 끝 */}
       </Routes>
     </Router>
