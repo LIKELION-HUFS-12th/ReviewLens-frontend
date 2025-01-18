@@ -1,15 +1,11 @@
-// src/api/analysisApi.js
-export const API_BASE_URL = 'https://verynicetomato.site';
+import { API_BASE_URL } from './config';
 
-export const TOKEN =
-	'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM3MzkyNDYyLCJpYXQiOjE3MzQ4MDA0NjIsImp0aSI6ImNlOTAwM2VlOGEzYjQ4Mjk5MDA2NjRhNGY5YmM0ZDkyIiwidXNlcl9pZCI6MX0.qNL8v2oD2szZwWudToFBDCEo5FANNkdFivcaav0uc7c';
-
-export const fetchAnalysisResult = async () => {
+export const fetchAnalysisResult = async (accessToken, fileId) => {
 	try {
-		const response = await fetch(`${API_BASE_URL}/analysis/result/`, {
+		const response = await fetch(`${API_BASE_URL}/analysis/result/${fileId}/`, {
 			method: 'GET',
 			headers: {
-				Authorization: TOKEN,
+				Authorization: `Bearer ${accessToken}`,
 				'Content-Type': 'application/json',
 			},
 		});
@@ -31,12 +27,12 @@ export const fetchAnalysisResult = async () => {
 	}
 };
 
-export const downloadPdfReport = async () => {
+export const downloadPdfReport = async (accessToken) => {
 	try {
 		const response = await fetch(`${API_BASE_URL}/analysis/download/`, {
 			method: 'GET',
 			headers: {
-				Authorization: TOKEN,
+				Authorization: `Bearer ${accessToken}`,
 				'Content-Type': 'application/pdf',
 			},
 		});

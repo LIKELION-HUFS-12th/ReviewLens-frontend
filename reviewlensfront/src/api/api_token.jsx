@@ -1,16 +1,25 @@
-// 전체 api url과 token - Contacts에 사용.
+// src/api/api_token.jsx
 
 import axios from 'axios';
 
 const API_URL = 'https://verynicetomato.site';
-const AUTH_TOKEN =
-  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM3MzkyNDYyLCJpYXQiOjE3MzQ4MDA0NjIsImp0aSI6ImNlOTAwM2VlOGEzYjQ4Mjk5MDA2NjRhNGY5YmM0ZDkyIiwidXNlcl9pZCI6MX0.qNL8v2oD2szZwWudToFBDCEo5FANNkdFivcaav0uc7c';
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: {
-    Authorization: AUTH_TOKEN,
-  },
 });
+
+// 요청 인터셉터 추가
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('accessToken'); // localStorage에서 토큰 가져오기
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`; // Authorization 헤더 추가
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default api;
