@@ -28,8 +28,8 @@ export const SignUpBoxs = styled.div`
 	font-size: 30px;
 	font-weight: 900;
 	justify-content: center;
-	margin-top: 50px;
-	margin-bottom: 50px;
+	margin-top: 0;
+	margin-bottom: 0px;
 	gap: 20px;
 
 	p {
@@ -89,7 +89,7 @@ export const LoginButton = styled.button`
 	cursor: pointer;
 `;
 export const SignUpButton = styled.button`
-	width: 85px;
+	width: auto;
 	height: auto;
 	font-size: 18px;
 	font-weight: 500;

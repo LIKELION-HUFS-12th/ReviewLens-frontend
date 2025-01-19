@@ -21,7 +21,7 @@ export const ContentBox = styled.div`
 	align-items: center;
 	justify-content: center;
 	width: 50vw;
-	height: 40vh;
+	height: clamp(450px, 40vh, 700px); /* 최소 500px, 기본 40vh, 최대 700px */
 	border: 0.5px solid shadow;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* 흐림 효과 그림자 */
 	border-radius: 10px;
@@ -32,11 +32,11 @@ export const ContentBox = styled.div`
 export const ContentBox2 = styled.div`
 	display: flex;
 	margin: auto;
-	margin-top: 120px;
+	margin-top: clamp(80px, 6vh, 100px);
 	align-items: center;
 	justify-content: center;
 	width: 40vw;
-	height: 60vh;
+	height: clamp(650px, 60vh, 1100px); /* 최소 700px, 기본 60vh, 최대 1100px */
 	border: 0.5px solid shadow;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* 흐림 효과 그림자 */
 	border-radius: 10px;

@@ -11,17 +11,37 @@ import {
 import styled from 'styled-components';
 
 // Styled Components
-const Body1 = styled.div`
-	display: flex;
+// const Body1 = styled.div`
+//   display: flex;
+//   width: 100%;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   min-height: 100vh;
+//   background: linear-gradient(180deg, #ebf4ff 0%, #ffffff 100%);
+//   overflow-x: hidden;
+// `;
+
+const Container = styled.div`
+	position: relative;
 	width: 100vw;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
-	background: linear-gradient(180deg, #ebf4ff 0%, #ffffff 100%);
-	overflow-x: hidden;
+	overflow: hidden;
+	background: #ebf4ff;
 `;
 
+const Body1 = styled.div`
+	position: relative;
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	background: #ebf4ff;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	box-shadow: -80vw 0 0 #ebf4ff, 80vw 0 0 #ebf4ff; /* 좌우로 배경 확장 */
+`;
 const StepContainer = styled.div`
 	/*width: 100vw;*/
 	margin: auto;
@@ -169,56 +189,58 @@ const About = () => {
 	];
 
 	return (
-		<Body1>
-			<StepContainer>
-				<AnimatedTitle visible={isVisible}>
-					리뷰를<HighlightText>분석</HighlightText>해보세요
-				</AnimatedTitle>
+		<Container>
+			<Body1>
+				<StepContainer>
+					<AnimatedTitle visible={isVisible}>
+						리뷰를<HighlightText>분석</HighlightText>해보세요
+					</AnimatedTitle>
 
-				<p className='text-xl text-center text-gray-600 mb-12'>
-					AI 기반의 리뷰 분석 서비스로 고객의 목소리를 쉽게 이해하세요
-				</p>
+					<p className='text-xl text-center text-gray-600 mb-12'>
+						AI 기반의 리뷰 분석 서비스로 고객의 목소리를 쉽게 이해하세요
+					</p>
 
-				<StepGrid>
-					{steps.map((step, index) => (
-						<div
-							key={index}
-							className={`w-full transform transition-all duration-500 ${
-								activeStep === index ? 'scale-102' : 'scale-100'
-							}`}
-						>
+					<StepGrid>
+						{steps.map((step, index) => (
 							<div
-								className={`rounded-lg p-6 bg-white shadow-lg hover:shadow-xl transition-all duration-300 w-full
+								key={index}
+								className={`w-full transform transition-all duration-500 ${
+									activeStep === index ? 'scale-102' : 'scale-100'
+								}`}
+							>
+								<div
+									className={`rounded-lg p-6 bg-white shadow-lg hover:shadow-xl transition-all duration-300 w-full
                             ${
 															activeStep === index
 																? 'border-2 border-blue-500 transform translate-x-2'
 																: ''
 														}`}
-							>
-								<StepContent>
-									<IconTitleWrapper>
-										<div
-											className={`${step.color} text-white p-3 rounded-full`}
-										>
-											{step.icon}
-										</div>
-										<h3 className='text-xl font-semibold'>{step.title}</h3>
-									</IconTitleWrapper>
-									<p className='text-gray-600 ml-14'>{step.description}</p>
-								</StepContent>
+								>
+									<StepContent>
+										<IconTitleWrapper>
+											<div
+												className={`${step.color} text-white p-3 rounded-full`}
+											>
+												{step.icon}
+											</div>
+											<h3 className='text-xl font-semibold'>{step.title}</h3>
+										</IconTitleWrapper>
+										<p className='text-gray-600 ml-14'>{step.description}</p>
+									</StepContent>
+								</div>
 							</div>
-						</div>
-					))}
-				</StepGrid>
+						))}
+					</StepGrid>
 
-				<div className='text-center mt-12'>
-					<CtaButton onClick={handleAlysClick}>
-						분석 시작하기
-						<ArrowRight />
-					</CtaButton>
-				</div>
-			</StepContainer>
-		</Body1>
+					<div className='text-center mt-12'>
+						<CtaButton onClick={handleAlysClick}>
+							분석 시작하기
+							<ArrowRight />
+						</CtaButton>
+					</div>
+				</StepContainer>
+			</Body1>
+		</Container>
 	);
 };
 
