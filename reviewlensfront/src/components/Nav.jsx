@@ -1,4 +1,4 @@
-import Rimg from '../assets/R.png';
+import Rimg from '../assets/reviewLens_black.png';
 import {
 	Blank,
 	NavHeader,
